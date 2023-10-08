@@ -1,8 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
+import { Link } from "react-router-dom";
+import { useAuthValue } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -14,6 +18,8 @@ const Navbar = () => {
     // Change the current theme
     theme === "light" ? setTheme("dark") : setTheme("light");
   };
+
+  const currentUser = useAuthValue();
 
   return (
     <div className="m-4 shadow-md rounded-3xl">
@@ -41,7 +47,11 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-max"
             >
               <li>
-                <a href='/' className="tooltip tooltip-right" data-tip="Home">
+                <Link
+                  to={"/"}
+                  className="tooltip tooltip-right"
+                  data-tip="Home"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -56,10 +66,14 @@ const Navbar = () => {
                       d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                     />
                   </svg>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href='/' className="tooltip tooltip-right" data-tip="Details">
+                <a
+                  href="/"
+                  className="tooltip tooltip-right"
+                  data-tip="Details"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -77,7 +91,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href='/' className="tooltip tooltip-right" data-tip="Stats">
+                <a href="/" className="tooltip tooltip-right" data-tip="Stats">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -98,7 +112,10 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex-1">
-          <a href="/" className="btn btn-ghost normal-case text-xl hidden sm:flex">
+          <Link
+            to={"/"}
+            className="btn btn-ghost normal-case text-xl hidden sm:flex"
+          >
             <div className="w-10 rounded-full">
               <img
                 alt="avatar"
@@ -106,44 +123,62 @@ const Navbar = () => {
               />
             </div>
             DEV@DEAKIN
-          </a>
+          </Link>
         </div>
-        <div className="flex-none gap-2 mr-4">
-          <div className="form-control">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-24 sm:w-auto rounded-3xl"
-            />
+
+        {auth.currentUser ? (
+          <div className="flex-none gap-2 mr-4">
+            <div className="form-control">
+              <input
+                type="text"
+                placeholder="Search"
+                className="input input-bordered w-24 sm:w-auto rounded-3xl"
+              />
+            </div>
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="avatar"
+                    src={currentUser.photoUrl ? (currentUser.photoUrl) : "https://w7.pngwing.com/pngs/247/564/png-transparent-computer-icons-user-profile-user-avatar-blue-heroes-electric-blue.png"}
+                  />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a href="/" className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/">Settings</a>
+                </li>
+                <li>
+                  <Link onClick={() => signOut(auth)}>
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="avatar"
-                  src="/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a href="/" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a href="/">Settings</a>
-              </li>
-              <li>
-                <a href="/">Logout</a>
-              </li>
-            </ul>
+        ) : (
+          <div className="flex">
+            <Link to={'/register'}>
+              <button className="btn mr-4 rounded-3xl">
+                Register
+              </button>
+            </Link>
+            <Link to={"/login"}>
+              <button className="btn mr-4 rounded-3xl">
+                Login
+              </button>
+            </Link>
           </div>
-        </div>
+        )}
         <label className="swap swap-rotate">
           {/* this hidden checkbox controls the state */}
           <input type="checkbox" onClick={handleDarkModeToggle} />
