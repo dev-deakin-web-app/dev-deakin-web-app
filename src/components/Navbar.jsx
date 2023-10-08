@@ -98,7 +98,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex-1">
-          <a href="/" className="btn btn-ghost normal-case text-xl">
+          <a href="/" className="btn btn-ghost normal-case text-xl hidden sm:flex">
             <div className="w-10 rounded-full">
               <img
                 alt="avatar"
@@ -113,7 +113,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search"
-              className="input input-bordered w-24 md:w-auto rounded-3xl"
+              className="input input-bordered w-24 sm:w-auto rounded-3xl"
             />
           </div>
           <div className="dropdown dropdown-end">
