@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Profile from "./pages/Home/Profile"
 import Register from "./pages/Registration/RegistrationPage";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import Login from "./pages/Login/LoginPage";
@@ -10,6 +9,11 @@ import { useEffect } from "react";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import HomePage from "./pages/Home/HomePage";
+import ChatRoom from "./pages/ChatRoom/ChatRoom";
+import Post from "./pages/Post/Post";
+import ArticlePage from "./pages/ArticlePage/ArticlePage";
+import QuestionPage from "./pages/QuestionPage/QuestionPage";
+import FindQuestionPage from "./pages/FindQuestionPage/FindQuestionPage";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -28,6 +32,11 @@ function App() {
           <Route exact path="/login" element={<Login/>} />
           <Route exact path="/register" element={<Register/>} />
           <Route exact path="/verify-email" element={<VerifyEmail/>} />
+          <Route exact path="/chat-room" element={<ChatRoom/>}/>
+          <Route exact path="/post" element={<Post/>}/>
+          <Route exact path="/showallarticles" element={<ArticlePage/>}/>
+          <Route exact path="/showallquestions" element={<QuestionPage/>}/>
+          <Route exact path="/findquestionpage" element={<FindQuestionPage/>}/>
         </Routes>
       </AuthProvider>
     </Router>

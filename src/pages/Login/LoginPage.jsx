@@ -36,9 +36,7 @@ function Login() {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider).then(() => {
-        
-      });
+      await signInWithPopup(auth, googleProvider)
     } catch (err) {
       console.error(err);
     }
@@ -93,7 +91,7 @@ function Login() {
               />
             </div>
             <a
-              href="#"
+              href="/"
               className="text-xs text-gray-600 hover:underline hover:text-blue-600"
             >
               Forget Password?
@@ -104,7 +102,10 @@ function Login() {
               </button>
             </div>
             <div className="w-full flex justify-center">
-              <button onClick={signInWithGoogle} className="px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
+              <button
+                onClick={signInWithGoogle}
+                className="px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
+              >
                 <img
                   className="w-6 h-6"
                   src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -112,6 +113,20 @@ function Login() {
                   alt="google logo"
                 />
                 <span>Login with Google</span>
+              </button>
+            </div>
+            <div className="w-full flex justify-center">
+              <button
+                onClick={signInWithGoogle}
+                className="px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
+              >
+                <img
+                  className="w-6 h-6"
+                  src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                  loading="lazy"
+                  alt="github logo"
+                />
+                <span>Login with Github</span>
               </button>
             </div>
             <p>

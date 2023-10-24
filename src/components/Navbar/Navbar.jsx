@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
-import { useAuthValue } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
@@ -18,8 +17,6 @@ const Navbar = () => {
     // Change the current theme
     theme === "light" ? setTheme("dark") : setTheme("light");
   };
-
-  const currentUser = useAuthValue();
 
   return (
     <div className="m-4 shadow-md rounded-3xl">
@@ -54,43 +51,29 @@ const Navbar = () => {
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    height="1em"
+                    viewBox="0 0 576 512"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
+                    <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
                   </svg>
                 </Link>
               </li>
               <li>
-                <a
-                  href="/"
+                <Link
+                  to={"/chat-room"}
                   className="tooltip tooltip-right"
-                  data-tip="Details"
+                  data-tip="Chat Room"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    height="1em"
+                    viewBox="0 0 576 512"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+                    <path d="M284.046,224.8a34.114,34.114,0,1,0,34.317,34.113A34.217,34.217,0,0,0,284.046,224.8Zm-110.45,0a34.114,34.114,0,1,0,34.317,34.113A34.217,34.217,0,0,0,173.6,224.8Zm220.923,0a34.114,34.114,0,1,0,34.317,34.113A34.215,34.215,0,0,0,394.519,224.8Zm153.807-55.319c-15.535-24.172-37.31-45.57-64.681-63.618-52.886-34.817-122.374-54-195.666-54a405.975,405.975,0,0,0-72.032,6.357,238.524,238.524,0,0,0-49.51-36.588C99.684-11.7,40.859.711,11.135,11.421A14.291,14.291,0,0,0,5.58,34.782C26.542,56.458,61.222,99.3,52.7,138.252c-33.142,33.9-51.112,74.776-51.112,117.337,0,43.372,17.97,84.248,51.112,118.148,8.526,38.956-26.154,81.816-47.116,103.491a14.284,14.284,0,0,0,5.555,23.34c29.724,10.709,88.549,23.147,155.324-10.2a238.679,238.679,0,0,0,49.51-36.589A405.972,405.972,0,0,0,288,460.14c73.313,0,142.8-19.159,195.667-53.975,27.371-18.049,49.145-39.426,64.679-63.619,17.309-26.923,26.07-55.916,26.07-86.125C574.394,225.4,565.634,196.43,548.326,169.485ZM284.987,409.9a345.65,345.65,0,0,1-89.446-11.5l-20.129,19.393a184.366,184.366,0,0,1-37.138,27.585,145.767,145.767,0,0,1-52.522,14.87c.983-1.771,1.881-3.563,2.842-5.356q30.258-55.68,16.325-100.078c-32.992-25.962-52.778-59.2-52.778-95.4,0-83.1,104.254-150.469,232.846-150.469s232.867,67.373,232.867,150.469C517.854,342.525,413.6,409.9,284.987,409.9Z" />
                   </svg>
-                </a>
+                </Link>
               </li>
-              <li>
+              {/* <li>
                 <a href="/" className="tooltip tooltip-right" data-tip="Stats">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +90,9 @@ const Navbar = () => {
                     />
                   </svg>
                 </a>
-              </li>
+                <Link>
+                </Link>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -129,53 +114,145 @@ const Navbar = () => {
         {auth.currentUser ? (
           <div className="flex-none gap-2 mr-4">
             <div className="form-control">
-              <input
-                type="text"
-                placeholder="Search"
-                className="input input-bordered w-24 sm:w-auto rounded-3xl"
-              />
+              <Link to={"/post"}>
+                <button className="btn btn-ghost rounded-3xl">
+                  {/* Svg of Post */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
+                  </svg>
+                  Post
+                </button>
+              </Link>
             </div>
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
                   <img
                     alt="avatar"
-                    src={currentUser.photoUrl ? (currentUser.photoUrl) : "https://w7.pngwing.com/pngs/247/564/png-transparent-computer-icons-user-profile-user-avatar-blue-heroes-electric-blue.png"}
+                    src={
+                      auth.currentUser.photoURL
+                        ? auth.currentUser.photoURL
+                        : "https://w7.pngwing.com/pngs/247/564/png-transparent-computer-icons-user-profile-user-avatar-blue-heroes-electric-blue.png"
+                    }
                   />
                 </div>
               </label>
               <ul
                 tabIndex={0}
-                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-max"
               >
+                {/* Open the modal using document.getElementById('ID').showModal() method */}
+
                 <li>
-                  <a href="/" className="justify-between">
+                  <div
+                    className="justify-between"
+                    onClick={() =>
+                      document.getElementById("my_modal_5").showModal()
+                    }
+                  >
                     Profile
-                    <span className="badge">New</span>
-                  </a>
+                  </div>
                 </li>
+                <dialog
+                  id="my_modal_5"
+                  className="modal modal-bottom sm:modal-middle"
+                >
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg">Your Profile</h3>
+                    <div className="py-4">
+                      {/* Here is the profile Card */}
+                      <div class="flex items-center h-1/2 w-full justify-center">
+                        <div class="max-w-xs">
+                          <div class="bg-white shadow-xl rounded-lg py-3">
+                            <div class="photo-wrapper p-2">
+                              <img
+                                class="w-32 h-32 rounded-full mx-auto"
+                                src={auth.currentUser.photoURL}
+                                alt="John Doe"
+                              />
+                            </div>
+                            <div class="p-2">
+                              <h3 class="text-center text-xl text-gray-900 font-medium leading-8">
+                                {auth.currentUser.displayName}
+                              </h3>
+                              <div class="text-center text-gray-400 text-xs font-semibold">
+                                <p>Web Developer</p>
+                              </div>
+                              <table class="text-xs my-3">
+                                <tbody>
+                                  <tr>
+                                    <td class="px-2 py-2 text-gray-500 font-semibold">
+                                      Address
+                                    </td>
+                                    <td class="px-2 py-2">
+                                      Chatakpur-3, Dhangadhi Kailali
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="px-2 py-2 text-gray-500 font-semibold">
+                                      Phone
+                                    </td>
+                                    <td class="px-2 py-2">+977 9955221114</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="px-2 py-2 text-gray-500 font-semibold">
+                                      Email
+                                    </td>
+                                    <td class="px-2 py-2">
+                                      {auth.currentUser.email}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              {/* 
+                              <div class="text-center my-3">
+                                <a
+                                  class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium"
+                                  href="#"
+                                >
+                                  View Profile
+                                </a>
+                              </div> */}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn">Close</button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
                 <li>
                   <a href="/">Settings</a>
                 </li>
                 <li>
-                  <Link onClick={() => signOut(auth)}>
-                    Logout
-                  </Link>
+                  <Link onClick={() => signOut(auth)}>Logout</Link>
                 </li>
               </ul>
             </div>
           </div>
         ) : (
           <div className="flex">
-            <Link to={'/register'}>
-              <button className="btn mr-4 rounded-3xl">
-                Register
-              </button>
+            <Link to={"/register"}>
+              <button className="btn mr-4 rounded-3xl">Register</button>
             </Link>
             <Link to={"/login"}>
-              <button className="btn mr-4 rounded-3xl">
-                Login
-              </button>
+              <button className="btn mr-4 rounded-3xl">Login</button>
             </Link>
           </div>
         )}

@@ -20,15 +20,15 @@ function VerifyEmail() {
         .then(() => {
           if (currentUser?.emailVerified) {
             clearInterval(interval);
-            history.push("/");
+            history("/");
           }
         })
         .catch((err) => {
           alert(err.message);
-        });
-    }, 1000);
+        }, 1000);
   }, [history, currentUser]);
 
+      });
   useEffect(() => {
     let interval = null;
     if (timeActive && time !== 0) {
@@ -72,6 +72,10 @@ function VerifyEmail() {
             <br />
             <span>{currentUser?.email}</span>
           </p>
+
+          <div className="card-actions">
+            {buttonDisabled ? <div>Please Check you email</div> : null}
+          </div>
           <span>
             Follow the instruction in the email to verify your account
           </span>
