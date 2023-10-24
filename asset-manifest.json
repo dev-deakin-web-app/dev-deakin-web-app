@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dev-deakin-web-app/static/css/main.9fcf758b.css",
+    "main.js": "/dev-deakin-web-app/static/js/main.edb031b0.js",
+    "static/js/787.5fe05f9f.chunk.js": "/dev-deakin-web-app/static/js/787.5fe05f9f.chunk.js",
+    "index.html": "/dev-deakin-web-app/index.html",
+    "main.9fcf758b.css.map": "/dev-deakin-web-app/static/css/main.9fcf758b.css.map",
+    "main.edb031b0.js.map": "/dev-deakin-web-app/static/js/main.edb031b0.js.map",
+    "787.5fe05f9f.chunk.js.map": "/dev-deakin-web-app/static/js/787.5fe05f9f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9fcf758b.css",
+    "static/js/main.edb031b0.js"
+  ]
+}
