@@ -41,7 +41,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-max"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-max dark:bg-white"
             >
               <li>
                 <Link
@@ -73,26 +73,21 @@ const Navbar = () => {
                   </svg>
                 </Link>
               </li>
-              {/* <li>
-                <a href="/" className="tooltip tooltip-right" data-tip="Stats">
+              <li>
+                <Link
+                  to={"/post"}
+                  className="tooltip tooltip-right"
+                  data-tip="Post"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    height="1em"
+                    viewBox="0 0 512 512"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
+                    <path d="M504 232H444V172a12 12 0 0 0-12-12H88a12 12 0 0 0-12 12v60H8a8 8 0 0 0-8 8v192a24 24 0 0 0 24 24h456a24 24 0 0 0 24-24V240a8 8 0 0 0-8-8zM256 372a12 12 0 0 1-12 12h-76a12 12 0 0 1-12-12v-76a12 12 0 0 1 12-12h76a12 12 0 0 1 12 12z" />
                   </svg>
-                </a>
-                <Link>
                 </Link>
-              </li> */}
+              </li>
             </ul>
           </div>
         </div>

@@ -15,6 +15,7 @@ const ArticleCard = (props) => {
   const [likes, setLikes] = useState(props.likes); // Initialize with the initial likes count
   const [likedBy, setlikedBy] = useState(props.likedBy);
 
+  console.log(loading);
   const imageLoaded = () => {
     setLoading(false);
   };

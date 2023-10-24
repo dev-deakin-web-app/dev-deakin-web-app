@@ -2,32 +2,22 @@ import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { db } from "../../../firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../../../firebase";
-import { useNavigate } from "react-router-dom";
+import { faker } from "@faker-js/faker";
 
-const Question = () => {
+const Blog = () => {
   // Add a new document with a generated id
   const newDocument = doc(collection(db, "documents"));
-
-  const history = useNavigate();
 
   // Post Handler Method
   const postHandler = async () => {
     // Check if user filled all the fields
-    if (
-      !input.title ||
-      !input.code ||
-      !input.description ||
-      !input.coverImage
-    ) {
+    if (!input.title || !input.code) {
       alert("Please fill all the fields");
       return;
     } else {
+      alert("Blog Posted");
       console.log(input);
       await setDoc(newDocument, input);
-      alert("Question Posted");
-      history("/");
     }
   };
 
@@ -45,58 +35,12 @@ const Question = () => {
     description: "null",
     attachmentsPath: "/",
     tags: [],
-    coverImage: null,
+    coverImage: faker.image.url(),
     likes: 0,
     likedBy: [],
   });
 
   const code = `print("Hello World")`;
-
-  // State to store uploaded file
-  const [file, setFile] = useState("");
-
-  // progress
-  const [percent, setPercent] = useState(0);
-
-  // Handle file upload event and update state
-  function handleChange(event) {
-    setFile(event.target.files[0]);
-  }
-
-  const handleUpload = () => {
-    if (!file) {
-      alert("Please upload an image first!");
-    }
-
-    const storageRef = ref(storage, `/files/${file.name}`);
-
-    // progress can be paused and resumed. It also exposes progress updates.
-    // Receives the storage reference and the file to upload.
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-
-        // update progress
-        setPercent(percent);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          setInput({
-            ...input,
-            coverImage: url,
-          });
-        });
-      }
-    );
-  };
 
   return (
     <div className="flex flex-col m-auto p-2 gap-2 border-2 rounded-3xl w-max mb-8">
@@ -140,7 +84,7 @@ const Question = () => {
             keyMap: "sublime",
             mode: "jsx",
           }}
-          width="100%"
+          width="450px"
           className="m-4"
           onChange={(e) => {
             setInput({
@@ -152,32 +96,20 @@ const Question = () => {
       </div>
       {/* File */}
       <div className="flex m-2 flex-col md:flex-row">
-        <h1 className="text-2xl font-mono m-1 md:m-2">Image</h1>
+        <h1 className="text-2xl font-mono m-1 md:m-2">Attachements</h1>
 
         {/* File Input */}
-        <div className="flex flex-col justify-center w-max align-middle text-center p-2 border rounded-2xl">
-          <input
-            type="file"
-            accept="image/*"
-            className="file-input file-input-bordered w-full max-w-xs"
-            onChange={handleChange}
-          />
-
-          <progress
-            className="progress w-full mt-4"
-            value={percent}
-            max="100"
-          ></progress>
-
-          <button
-            className="btn btn-neutral m-4 rounded-full"
-            onClick={handleUpload}
-          >
-            Upload Image
-          </button>
-        </div>
+        <input
+          type="file"
+          className="file-input file-input-bordered w-full max-w-xs"
+          onChange={(e) => {
+            setInput({
+              ...input,
+              attachmentsPath: e.target.value,
+            });
+          }}
+        />
       </div>
-
       {/* Tags Input */}
       <div className="flex m-2 flex-col md:flex-row gap-4">
         <h1 className="text-2xl font-mono m-1 md:m-2">Tags</h1>
@@ -191,7 +123,7 @@ const Question = () => {
               setInput({
                 ...input,
                 tags: [...input.tags, e.target.value],
-              });
+              })
             }
           }}
         />
@@ -225,7 +157,7 @@ const Question = () => {
                 setInput({
                   ...input,
                   tags: input.tags.filter((_, i) => i !== index),
-                });
+                })
               }}
             >
               <path
@@ -252,4 +184,4 @@ const Question = () => {
   );
 };
 
-export default Question;
+export default Blog;

@@ -41,6 +41,7 @@ function VerifyEmail() {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
+    // eslint-disable-next-line
   }, [timeActive, time]);
 
   const resendEmailVerification = () => {
@@ -53,7 +54,7 @@ function VerifyEmail() {
       .catch((err) => {
         alert(err.message);
         setButtonDisabled(false);
-      });
+    });
   };
 
   return (

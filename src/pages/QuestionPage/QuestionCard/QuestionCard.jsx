@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import {
   doc,
   updateDoc,
@@ -11,7 +10,6 @@ import {
 import { db, auth } from "../../../firebase";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { toPng } from "html-to-image";
 import * as htmlToImage from "html-to-image";
 import download from "downloadjs";
 
@@ -21,6 +19,7 @@ const QuestionCard = (props) => {
   const [likedBy, setlikedBy] = useState(props.likedBy);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  console.log(loading);
   const imageLoaded = () => {
     setLoading(false);
   };

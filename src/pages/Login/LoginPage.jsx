@@ -5,7 +5,7 @@ import {
   sendEmailVerification,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, googleProvider } from "../../firebase";
+import { auth, googleProvider, githubProvider } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
 import Layout from "../../components/Layout/Layout";
@@ -36,10 +36,23 @@ function Login() {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider)
+      await signInWithPopup(auth, googleProvider);
+      history("/");
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const signInWithGitHub = async () => {
+    await signInWithPopup(auth, githubProvider)
+      .then((result) => {
+        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+        // const credential = GithubAuthProvider.credentialFromResult(result);
+        alert("Logged In");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -117,7 +130,7 @@ function Login() {
             </div>
             <div className="w-full flex justify-center">
               <button
-                onClick={signInWithGoogle}
+                onClick={signInWithGitHub}
                 className="px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
               >
                 <img

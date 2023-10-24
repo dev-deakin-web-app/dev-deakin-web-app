@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import Article from "./Article/Article";
 import Question from "./Question/Question";
+import Blog from "./Blog/Blog";
 
 const Post = () => {
   // Using State Current Selected Option
@@ -30,10 +31,17 @@ const Post = () => {
               aria-label="Article"
               onClick={() => setOption("Article")}
             />
+            <input
+              className="join-item btn rounded-3xl"
+              type="radio"
+              name="options"
+              aria-label="Blog"
+              onClick={() => setOption("Blog")}
+            />
           </div>
         </div>
         {/* Show Selected Option */}
-        {option === "Question" ? <Question /> : <Article />}
+        {option === "Question" ? <Question /> : option === "Article" ? <Article /> : <Blog />}
       </div>
     </Layout>
   );
