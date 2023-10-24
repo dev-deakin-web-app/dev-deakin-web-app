@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Buttons = () => {
   return (
-    <div className="rounded-3xl shadow mt-8 flex flex-col sm:flex-row">
+    <div className="rounded-3xl shadow mt-8 flex flex-col sm:flex-row w-max justify-center">
       <Link to={"/blogs"}>
         <button className="btn btn-neutral m-5 rounded-3xl">Blogs</button>
       </Link>
@@ -17,7 +17,7 @@ const Buttons = () => {
           All Questions
         </button>
       </Link>
-      
+
     </div>
   );
 };

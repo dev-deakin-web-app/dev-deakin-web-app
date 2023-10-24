@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { db } from "../../../firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
-
-// Add a new document with a generated id
-const newDocument = doc(collection(db, "documents"));
+import { faker } from "@faker-js/faker";
 
 const Question = () => {
+  // Add a new document with a generated id
+  const newDocument = doc(collection(db, "documents"));
+
   // Post Handler Method
   const postHandler = async () => {
     // Check if user filled all the fields
@@ -14,16 +15,16 @@ const Question = () => {
       alert("Please fill all the fields");
       return;
     } else {
+      alert("Question Posted");
+      console.log(input);
       await setDoc(newDocument, input);
     }
   };
 
   // TagsInput
-  const [tags, setTags] = useState([]);
-
   const [input, setInput] = useState({
-    code: null,
-    title: null,
+    code: "null",
+    title: "null",
     timeStamp: new Date().toLocaleTimeString(),
     dateStamp:
       new Date().getDate() +
@@ -31,9 +32,12 @@ const Question = () => {
       (new Date().getMonth() + 1) +
       "/" +
       new Date().getFullYear(),
-    description: null,
+    description: "null",
     attachmentsPath: "/",
-    tags: tags,
+    tags: [],
+    coverImage: faker.image.url(),
+    likes: 0,
+    likedBy: [],
   });
 
   const code = `print("Hello World")`;
@@ -82,6 +86,12 @@ const Question = () => {
           }}
           width="450px"
           className="m-4"
+          onChange={(e) => {
+            setInput({
+              ...input,
+              code: e.toString(),
+            });
+          }}
         />
       </div>
       {/* File */}
@@ -110,7 +120,10 @@ const Question = () => {
           className="input input-bordered w-full max-w-xs"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              setTags([...tags, e.target.value]);
+              setInput({
+                ...input,
+                tags: [...input.tags, e.target.value],
+              })
             }
           }}
         />
@@ -119,7 +132,10 @@ const Question = () => {
         <button
           className="btn btn-neutral rounded-2xl border"
           onClick={(e) => {
-            setTags([...tags, document.getElementById("inputTag").value]);
+            setInput({
+              ...input,
+              tags: [...input.tags, document.getElementById("inputTag").value],
+            });
           }}
         >
           Add
@@ -128,7 +144,7 @@ const Question = () => {
 
       {/* Tags */}
       <div className="flex flex-wrap border rounded-3xl p-4 w-11/12 gap-2 m-auto">
-        {tags.map((tag, index) => (
+        {input.tags.map((tag, index) => (
           <div className="badge badge-ghost m-1 p-3 text-lg" key={index}>
             {tag}
             <svg
@@ -138,7 +154,10 @@ const Question = () => {
               fill="currentColor"
               // Remove on click on this tag
               onClick={() => {
-                setTags(tags.filter((_, i) => i !== index));
+                setInput({
+                  ...input,
+                  tags: input.tags.filter((_, i) => i !== index),
+                })
               }}
             >
               <path

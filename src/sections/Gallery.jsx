@@ -13,13 +13,13 @@ const Gallery = () => {
       <ImageGallery />
 
       {/* Second Section */}
-      <div className="m-4 md:mt-10 w-max">
+      <div className="m-4 md:mt-10 w-1/2">
         {/* Time Section */}
         <Clock />
 
         {/* Show Second Info Only If User is logged in */}
         {auth.currentUser ? (
-          <div>
+          <div className="flex flex-col justify-center">
             {/* Buttons */}
             <Buttons />
 

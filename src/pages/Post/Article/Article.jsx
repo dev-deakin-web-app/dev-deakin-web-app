@@ -19,6 +19,8 @@ const Article = () => {
       new Date().getFullYear(),
     description: null,
     attachmentsPath: "/",
+    likes: 0,
+    likedBy: [],
   });
 
   // Post Handler Method
