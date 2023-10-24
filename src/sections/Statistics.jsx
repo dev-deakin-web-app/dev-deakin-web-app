@@ -42,7 +42,7 @@ const Statistics = () => {
         </div>
 
         <div className="stat">
-          <div className="stat-title">Total Users</div>
+          <div className="stat-title">Total Blogs</div>
           <div className="stat-value">2</div>
         </div>
       </div>

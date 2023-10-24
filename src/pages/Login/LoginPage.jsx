@@ -24,11 +24,11 @@ function Login() {
           sendEmailVerification(auth.currentUser)
             .then(() => {
               setTimeActive(true);
-              history.push("/verify-email");
+              history("/verify-email");
             })
             .catch((err) => alert(err.message));
         } else {
-          history.push("/");
+          history("/");
         }
       })
       .catch((err) => setError(err.message));

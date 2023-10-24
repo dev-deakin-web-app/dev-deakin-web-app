@@ -13,7 +13,7 @@ import ChatRoom from "./pages/ChatRoom/ChatRoom";
 import Post from "./pages/Post/Post";
 import ArticlePage from "./pages/ArticlePage/ArticlePage";
 import QuestionPage from "./pages/QuestionPage/QuestionPage";
-import FindQuestionPage from "./pages/FindQuestionPage/FindQuestionPage";
+import Blogs from "./pages/Blogs/Blogs";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -36,7 +36,7 @@ function App() {
           <Route exact path="/post" element={<Post/>}/>
           <Route exact path="/showallarticles" element={<ArticlePage/>}/>
           <Route exact path="/showallquestions" element={<QuestionPage/>}/>
-          <Route exact path="/findquestionpage" element={<FindQuestionPage/>}/>
+          <Route exact path="/blogs" element={<Blogs/>}/>
         </Routes>
       </AuthProvider>
     </Router>

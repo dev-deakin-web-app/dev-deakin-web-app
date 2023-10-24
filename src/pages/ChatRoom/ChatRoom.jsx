@@ -2,25 +2,18 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { db } from "../../firebase";
 import {
-  doc,
-  setDoc,
-  serverTimestamp,
   addDoc,
   collection,
-  getDoc,
-  getDocs,
-  orderBy,
-  limit,
+  onSnapshot, // Import onSnapshot
   query,
+  orderBy,
 } from "firebase/firestore";
 import { auth } from "../../firebase";
 
 const ChatRoom = () => {
   const sendMessage = async (e) => {
     e.preventDefault();
-
     const { uid, photoURL } = auth.currentUser;
-
     await addDoc(collection(db, "messages"), {
       message: formValue,
       timestamp: new Date().toLocaleString(),
@@ -28,76 +21,74 @@ const ChatRoom = () => {
       userName: auth.currentUser.displayName,
       uid: uid,
     });
-
     setFormValue("");
   };
 
   const [formValue, setFormValue] = useState("");
-
   const [messages, setMessages] = useState([]);
 
-  const fetchAllData = async () => {
-    const messageRef = collection(db, "messages");
-
-    const q = query(messageRef, orderBy("timestamp", "desc"), limit(25));
-
-    const querySnapshot = await getDocs(q);
-
-    // Clear previous data
-    setMessages([]);
-
-    querySnapshot.forEach((doc) => {
-      // putting data into the question
-      setMessages((prev) => [...prev, { ...doc.data(), id: doc.id }]);
-    });
-  };
-
   useEffect(() => {
-    fetchAllData();
+    // Set up a snapshot listener to update messages in real-time
+    const messageRef = collection(db, "messages");
+    const q = query(messageRef, orderBy("timestamp", "asc"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const newMessages = [];
+      querySnapshot.forEach((doc) => {
+        newMessages.push({ ...doc.data(), id: doc.id });
+      });
+      setMessages(newMessages);
+    });
+
+    return () => {
+      // Unsubscribe from the snapshot listener when the component unmounts
+      unsubscribe();
+    };
   }, []);
 
   return (
     <Layout>
       <div className="m-10 shadow rounded-3xl p-8">
-        {messages.map((message) => {
-          return (
-            <div>
-              {message.uid === auth.currentUser.uid ? (
-                <div className="chat chat-end">
-                  <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                      <img src={message.userPhotoUrl} />
+        <div className="h-96 overflow-scroll scrollbar-hide shadow-lg rounded-3xl p-3">
+          {messages.map((message) => {
+            return (
+              <div>
+                {message.uid === auth.currentUser.uid ? (
+                  <div className="chat chat-end">
+                    <div className="chat-image avatar">
+                      <div className="w-10 rounded-full">
+                        <img alt="user" src={message.userPhotoUrl} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="chat-header">
-                    {message.userName}
-                    <time className="text-xs opacity-50 pl-2">
-                      {message.timestamp}
-                    </time>
-                  </div>
-                  <div className="chat-bubble">{message.message}</div>
-                  {/* <div className="chat-footer opacity-50">Delivered</div> */}
-                </div>
-              ) : (
-                <div className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                      <img src={message.userPhotoUrl} />
+                    <div className="chat-header">
+                      {message.userName}
+                      <time className="text-xs opacity-50 pl-2">
+                        {message.timestamp}
+                      </time>
                     </div>
+                    <div className="chat-bubble">{message.message}</div>
+                    {/* <div className="chat-footer opacity-50">Delivered</div> */}
                   </div>
-                  <div className="chat-header">
-                    {message.userName}
-                    <time className="text-xs opacity-50 pl-2">
-                      {message.timestamp}
-                    </time>
+                ) : (
+                  <div className="chat chat-start">
+                    <div className="chat-image avatar">
+                      <div className="w-10 rounded-full">
+                        <img alt="user" src={message.userPhotoUrl} />
+                      </div>
+                    </div>
+                    <div className="chat-header">
+                      {message.userName}
+                      <time className="text-xs opacity-50 pl-2">
+                        {message.timestamp}
+                      </time>
+                    </div>
+                    <div className="chat-bubble">{message.message}</div>
+                    {/* <div className="chat-footer opacity-50">Delivered</div> */}
                   </div>
-                  <div className="chat-bubble">{message.message}</div>
-                  {/* <div className="chat-footer opacity-50">Delivered</div> */}
-                </div>
-              )}
-            </div>
-          );
-        })}
+                )}
+              </div>
+            );
+          })}
+        </div>
         <hr className="m-5" />
 
         <form className="flex w-full justify-end space-x-4 mt-5">

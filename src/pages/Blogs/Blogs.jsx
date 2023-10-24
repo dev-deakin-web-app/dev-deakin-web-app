@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
 
-const FindQuestionPage = () => {
+const Blogs = () => {
   return (
     <Layout>
         hi
@@ -9,4 +9,4 @@ const FindQuestionPage = () => {
   )
 }
 
-export default FindQuestionPage
+export default Blogs

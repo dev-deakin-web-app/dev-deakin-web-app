@@ -25,13 +25,11 @@ const Article = () => {
   const postHandler = async () => {
     // Check if user filled all the fields
     if (!input.title || !input.description) {
-      {
-        alert("Please fill all the fields");
-        return;
-      }
-    }else {
-        await setDoc(newArticle, input);
-        alert("Article Posted");
+      alert("Please fill all the fields");
+      return;
+    } else {
+      await setDoc(newArticle, input);
+      alert("Article Posted");
     }
   };
   return (

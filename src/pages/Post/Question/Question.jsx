@@ -11,10 +11,8 @@ const Question = () => {
   const postHandler = async () => {
     // Check if user filled all the fields
     if (!input.title || !input.code) {
-      {
-        alert("Please fill all the fields");
-        return;
-      }
+      alert("Please fill all the fields");
+      return;
     } else {
       await setDoc(newDocument, input);
     }
@@ -118,7 +116,12 @@ const Question = () => {
         />
 
         {/* Get value from inputTag and add to tags */}
-        <button className="btn btn-neutral rounded-2xl border" onClick={(e) => {setTags([...tags, document.getElementById("inputTag").value])}}>
+        <button
+          className="btn btn-neutral rounded-2xl border"
+          onClick={(e) => {
+            setTags([...tags, document.getElementById("inputTag").value]);
+          }}
+        >
           Add
         </button>
       </div>

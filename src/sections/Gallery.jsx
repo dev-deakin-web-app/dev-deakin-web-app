@@ -1,5 +1,5 @@
 import React from "react";
-import SecondSection from "./SecondSection";
+// import SecondSection from "./SecondSection";
 import { auth } from "../firebase";
 import ImageGallery from "./ImageGallery";
 import Clock from "../components/Clock/Clock";
