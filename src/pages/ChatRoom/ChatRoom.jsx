@@ -15,25 +15,7 @@ import {
 } from "firebase/firestore";
 import { auth } from "../../firebase";
 
-const ChatMessagesList = (props) => {
-  const { text, uid, photoURL } = props.message;
-
-  const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
-
-  return (
-    <div className={`message ${messageClass}`}>
-      <img src={photoURL} />
-      <p>{text}</p>
-    </div>
-  );
-};
-
 const ChatRoom = () => {
-  // const messageRef = db.collection('messages');
-  // const query = messageRef.orderBy('createdAt').limit(25);
-
-  // const [messages] = useCollectionData(query, {idField: 'id'});
-
   const sendMessage = async (e) => {
     e.preventDefault();
 
@@ -41,7 +23,7 @@ const ChatRoom = () => {
 
     await addDoc(collection(db, "messages"), {
       message: formValue,
-      timestamp: serverTimestamp(),
+      timestamp: new Date().toLocaleString(),
       userPhotoUrl: photoURL,
       userName: auth.currentUser.displayName,
       uid: uid,
@@ -77,53 +59,64 @@ const ChatRoom = () => {
   return (
     <Layout>
       <div className="m-10 shadow rounded-3xl p-8">
-        <div className="chat chat-start">
-          <div className="chat-image avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://play-lh.googleusercontent.com/0SAFn-mRhhDjQNYU46ZwA7tz0xmRiQG4ZuZmuwU8lYmqj6zEpnqsee_6QDuhQ4ZofwXj=w240-h480-rw" />
+        {messages.map((message) => {
+          return (
+            <div>
+              {message.uid === auth.currentUser.uid ? (
+                <div className="chat chat-end">
+                  <div className="chat-image avatar">
+                    <div className="w-10 rounded-full">
+                      <img src={message.userPhotoUrl} />
+                    </div>
+                  </div>
+                  <div className="chat-header">
+                    {message.userName}
+                    <time className="text-xs opacity-50 pl-2">
+                      {message.timestamp}
+                    </time>
+                  </div>
+                  <div className="chat-bubble">{message.message}</div>
+                  {/* <div className="chat-footer opacity-50">Delivered</div> */}
+                </div>
+              ) : (
+                <div className="chat chat-start">
+                  <div className="chat-image avatar">
+                    <div className="w-10 rounded-full">
+                      <img src={message.userPhotoUrl} />
+                    </div>
+                  </div>
+                  <div className="chat-header">
+                    {message.userName}
+                    <time className="text-xs opacity-50 pl-2">
+                      {message.timestamp}
+                    </time>
+                  </div>
+                  <div className="chat-bubble">{message.message}</div>
+                  {/* <div className="chat-footer opacity-50">Delivered</div> */}
+                </div>
+              )}
             </div>
-          </div>
-          <div className="chat-header">
-            Obi-Wan Kenobi
-            <time className="text-xs opacity-50">12:45</time>
-          </div>
-          <div className="chat-bubble">You were the Chosen One!</div>
-          <div className="chat-footer opacity-50">Delivered</div>
-        </div>
-        <div className="chat chat-end">
-          <div className="chat-image avatar">
-            <div className="w-10 rounded-full">
-              <img src={auth.currentUser.photoURL} />
-            </div>
-          </div>
-          <div className="chat-header">
-            {auth.currentUser.displayName}
-            <time className="text-xs opacity-50">12:46</time>
-          </div>
-          <div className="chat-bubble">Well Done</div>
-          <div className="chat-footer opacity-50">Seen at 12:46</div>
-        </div>
-
-        <hr className="m-5"/>
+          );
+        })}
+        <hr className="m-5" />
 
         <form className="flex w-full justify-end space-x-4 mt-5">
-          {/* <input
+          <input
+            type="text"
             value={formValue}
-            onChange={(e) => {
-              setFormValue(e.target.value);
-            }}
-          /> */}
-          <input type="text" placeholder="Type here" className="input input-bordered input-neutral w-full max-w-xs" />
-          <button type="submit" className="btn btn-primary rounded-3xl" onClick={sendMessage}>
+            onChange={(e) => setFormValue(e.target.value)}
+            placeholder="Type here"
+            className="input input-bordered input-neutral w-full max-w-xs"
+          />
+          <button
+            type="submit"
+            className="btn btn-primary rounded-3xl"
+            onClick={sendMessage}
+          >
             Send
           </button>
         </form>
       </div>
-
-      {messages &&
-        messages.map((message) => {
-          ChatMessagesList(message);
-        })}
     </Layout>
   );
 };
