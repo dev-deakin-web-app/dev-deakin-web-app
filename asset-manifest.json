@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/dev-deakin-web-app/static/css/main.9fcf758b.css",
-    "main.js": "/dev-deakin-web-app/static/js/main.a8a6e212.js",
+    "main.css": "/dev-deakin-web-app/static/css/main.54b4f513.css",
+    "main.js": "/dev-deakin-web-app/static/js/main.b8c96144.js",
     "static/js/787.5fe05f9f.chunk.js": "/dev-deakin-web-app/static/js/787.5fe05f9f.chunk.js",
     "index.html": "/dev-deakin-web-app/index.html",
-    "main.9fcf758b.css.map": "/dev-deakin-web-app/static/css/main.9fcf758b.css.map",
-    "main.a8a6e212.js.map": "/dev-deakin-web-app/static/js/main.a8a6e212.js.map",
+    "main.54b4f513.css.map": "/dev-deakin-web-app/static/css/main.54b4f513.css.map",
+    "main.b8c96144.js.map": "/dev-deakin-web-app/static/js/main.b8c96144.js.map",
     "787.5fe05f9f.chunk.js.map": "/dev-deakin-web-app/static/js/787.5fe05f9f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9fcf758b.css",
-    "static/js/main.a8a6e212.js"
+    "static/css/main.54b4f513.css",
+    "static/js/main.b8c96144.js"
   ]
 }
